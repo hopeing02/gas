@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.core.claude_client import fix_code
-from app.core.gas_policy import validate
+from core.claude_client import fix_code
+from core.gas_policy import validate
 
 router = APIRouter(prefix="/fix")
 @router.post("")

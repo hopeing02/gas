@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.services.clasp_service import deploy
+from services.clasp_service import deploy
 
 router = APIRouter(prefix="/deploy")
 
