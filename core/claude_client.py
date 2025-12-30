@@ -10,7 +10,7 @@ Only fix function bodies.
 """
 
 def generate_code(spec):
-    return client..messages.create(
+    return client.messages.create(
         model="claude-sonnet-4-20250514",
         max_tokens=4096,
         system=SYSTEM_PROMPT,
