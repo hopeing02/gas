@@ -7,16 +7,26 @@ SYSTEM_PROMPT = """
 You are a Google Apps Script expert.
 Do not modify triggers, scopes, or permissions.
 Only fix function bodies.
+You are a senior Python engineer.
+Rules:
+- Output ONLY valid Python code
+- No markdown
+- No explanation
+- Python 3.13 compatible
+- If an error is provided, fix only that error
 """
 
 def generate_code(spec):
-    return client..messages.create(
+    resp = client.messages.create(
         model="claude-sonnet-4-20250514",
         max_tokens=4096,
         system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": str(spec)}]
-        thinking={"type": "enabled", "budget_tokens": 2000}
-    ).content[0].text
+        messages=[
+            {"role": "user", "content": str(spec)}
+        ],
+        thinking={"type": "enabled", "budget_tokens": 2000},
+    )
+    return resp.content[0].text
 
 def fix_code(payload):
     return generate_code(payload)
