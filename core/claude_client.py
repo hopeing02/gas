@@ -7,6 +7,16 @@ SYSTEM_PROMPT = """
 You are a Google Apps Script expert.
 Do not modify triggers, scopes, or permissions.
 Only fix function bodies.
+<<<<<<< HEAD
+=======
+You are a senior Python engineer.
+Rules:
+- Output ONLY valid Python code
+- No markdown
+- No explanation
+- Python 3.13 compatible
+- If an error is provided, fix only that error
+>>>>>>> 9ccf4c3b5649425d0074fe8304f4021b0bd1c5ba
 """
 
 def generate_code(spec):
