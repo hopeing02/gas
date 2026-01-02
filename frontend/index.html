@@ -10,13 +10,19 @@
 
   <textarea id="spec" placeholder="원하는 기능을 설명하세요"></textarea>
 
-<button onclick="generate()">생성</button>
-<button onclick="fix()">수정</button>
-<button onclick="testCode()">테스트</button>
-<button onclick="deployCode()">배포</button>
+<button onclick="/api/generate()">생성</button>
+<button onclick="/api/fix()">수정</button>
+<button onclick="/api/testCode()">테스트</button>
+<button onclick="/api/deployCode()">배포</button>
 
-  <pre id="result"></pre>
+<pre id="result"></pre>
 
-  <script src="app.js"></script>
+<script >
+async function callApi(path){
+  const res=await fetch(path,{method:"POST"})
+  const data=await res.json()
+  console.log(data)
+}  
+</script>
 </body>
 </html>
