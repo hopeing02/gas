@@ -4,4 +4,3 @@ router = APIRouter()
 @router.post("/generate")
 def generate(spec: dict):
     return {"code": generate_code(spec)}
-print("code")
