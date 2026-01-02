@@ -21,7 +21,7 @@
 async function callApi(path){
   const res=await fetch(path,{method:"POST"})
   const data=await res.json()
-  document.getElementById("output").textContent=JSON.stringify(data,numm,2);
+  document.getElementById("output").textContent=JSON.stringify(data,null, 2);
 }  
 </script>
 </body>
