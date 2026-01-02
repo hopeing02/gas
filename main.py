@@ -5,9 +5,11 @@ from fastapi.responses import FileResponse
 
 app = FastAPI(title="gas ai platform")
 
-app.mount("/", StaticFiles(directory="frontend",html=True), name="frontend")
-
-app.include_router(generate.router,prefix="/api")
+app.mount("/static", StaticFiles(directory="frontend/static",html=True), name="static")
+@app.get("/")
+def root():
+    return FileResponse("frontend/index.html")
+""" app.include_router(generate.router,prefix="/api")
 app.include_router(test.router,prefix="/api")
 app.include_router(fix.router,prefix="/api")
-app.include_router(deploy.router,prefix="/api")
+app.include_router(deploy.router,prefix="/api") """

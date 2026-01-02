@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <title>GAS 자동 생성기</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/static/style.css" />
 </head>
 <body>
   <h1>Google Apps Script 자동 생성</h1>
 
   <textarea id="spec" placeholder="원하는 기능을 설명하세요"></textarea>
 
-<button onclick="/api/generate()">생성</button>
-<button onclick="/api/fix()">수정</button>
-<button onclick="/api/testCode()">테스트</button>
-<button onclick="/api/deployCode()">배포</button>
+<button onclick="callApi('/api/generate')">생성</button>
+<button onclick="callApi('/api/fix')">수정</button>
+<button onclick="callApi('/api/test')">테스트</button>
+<button onclick="callApi('/api/deploy')">배포</button>
 
-<pre id="result"></pre>
+<pre id="output"></pre>
 
 <script >
 async function callApi(path){
   const res=await fetch(path,{method:"POST"})
   const data=await res.json()
-  console.log(data)
+  document.getElementById("output").textContent=JSON.stringify(data,numm,2);
 }  
 </script>
 </body>
