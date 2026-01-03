@@ -20,15 +20,27 @@
 <script>
 async function callApi(path) {
   try {
-    const res = await fetch(path, { method: "POST" });
+    const res = await fetch(path, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        spec: {
+          message: "test"
+        }
+      })
+    });
 
     if (!res.ok) {
-      throw new Error(`HTTP ${res.status}`);
+      const text = await res.text();
+      throw new Error(`${res.status}: ${text}`);
     }
 
     const data = await res.json();
     document.getElementById("output").textContent =
       JSON.stringify(data, null, 2);
+
   } catch (err) {
     document.getElementById("output").textContent =
       "ERROR: " + err.message;
