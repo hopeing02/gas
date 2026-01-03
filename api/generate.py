@@ -1,6 +1,13 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
 from core.claude_client import generate_code
+
 router = APIRouter()
+
+class GenerateRequest(BaseModel):
+    spec: str
+
 @router.post("/generate")
-def generate(spec: dict):
-    return {"code": generate_code(spec)}
+def generate(req: GenerateRequest):
+    code = generate_code(req.spec)
+    return {"code": code}
