@@ -5,7 +5,7 @@ from core.claude_client import generate_code
 router = APIRouter()
 
 class GenerateRequest(BaseModel):
-    spec: str
+    spec: Any
 
 @router.post("/generate")
 def generate(req: GenerateRequest):
