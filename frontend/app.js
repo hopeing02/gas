@@ -1,5 +1,6 @@
 const API_BASE = "/api";
-const result = document.getElementById("output");
+
+const result = document.getElementById("result");
 
 async function callAPI(path, body = {}) {
   const res = await fetch(`${API_BASE}${path}`, {
@@ -17,7 +18,8 @@ async function callAPI(path, body = {}) {
 }
 
 async function generate() {
-  const spec = document.getElementById("spec").value;
+  const specText = document.getElementById("spec").value;
+
   const data = await callAPI("/generate", {
     spec: {
       description: specText
@@ -28,16 +30,21 @@ async function generate() {
 }
 
 async function fix() {
-  const data = await callAPI("/fix", { code: result.textContent });
+  const code = result.textContent;
+
+  const data = await callAPI("/fix", {
+    code
+  });
+
   result.textContent = data.code;
 }
 
 async function testCode() {
   const data = await callAPI("/test");
-  result.textContent = data.stdout || data.stderr;
+  result.textContent = data.stdout || data.stderr || JSON.stringify(data);
 }
 
 async function deployCode() {
   const data = await callAPI("/deploy");
-  result.textContent = data.result;
+  result.textContent = data.result || JSON.stringify(data);
 }
