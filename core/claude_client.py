@@ -24,16 +24,30 @@ SYSTEM_PROMPT = (
 
 def _extract_text(resp: Message) -> str:
     """
-    Claude SDK 응답 구조 안전 파싱
+    Claude 응답에서 모든 text block을 안전하게 추출
+    (SDK 버전 / 모델 변경에도 안 터짐)
     """
-    if not resp.content:
+    if not hasattr(resp, "content") or not resp.content:
         raise RuntimeError("Claude response has no content")
 
-    block = resp.content[0]
-    if hasattr(block, "text"):
-        return block.text
+    texts = []
 
-    raise RuntimeError("Unexpected Claude response format")
+    for block in resp.content:
+        # SDK 객체 형태
+        if hasattr(block, "type") and block.type == "text" and hasattr(block, "text"):
+            texts.append(block.text)
+
+        # dict 형태 (호환)
+        elif isinstance(block, dict) and block.get("type") == "text":
+            texts.append(block.get("text", ""))
+
+    if not texts:
+        raise RuntimeError(
+            f"No text block found in Claude response: {resp.content}"
+        )
+
+    return "\n".join(texts)
+
 
 def generate_code(spec: str) -> str:
     """
