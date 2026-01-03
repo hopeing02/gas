@@ -1,9 +1,18 @@
+const API_BASE = "/api";
+const result = document.getElementById("output");
+
 async function callAPI(path, body = {}) {
   const res = await fetch(`${API_BASE}${path}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body)
   });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`${res.status} ${text}`);
+  }
+
   return res.json();
 }
 
@@ -14,8 +23,7 @@ async function generate() {
 }
 
 async function fix() {
-  const payload = { code: result.textContent };
-  const data = await callAPI("/fix", payload);
+  const data = await callAPI("/fix", { code: result.textContent });
   result.textContent = data.code;
 }
 
