@@ -18,7 +18,12 @@ async function callAPI(path, body = {}) {
 
 async function generate() {
   const spec = document.getElementById("spec").value;
-  const data = await callAPI("/generate", { spec });
+  const data = await callAPI("/generate", {
+    spec: {
+      description: specText
+    }
+  });
+
   result.textContent = data.code;
 }
 
