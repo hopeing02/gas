@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 from core.claude_client import generate_code
+from fastapi import HTTPException  # 이 줄 추가
 
 router = APIRouter()
 
