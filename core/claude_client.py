@@ -84,7 +84,8 @@ Remember:
                 "role": "user",
                 "content": user_prompt
             }
-        ]
+        ],
+        thinking={"type": "enabled", "budget_tokens": 2000},
     )
 
     return _extract_text(resp)
