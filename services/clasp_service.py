@@ -15,6 +15,17 @@ def run_cmd(cmd: list[str]) -> tuple[int, str, str]:
     )
     return proc.returncode, proc.stdout.strip(), proc.stderr.strip()
 
+def deploy() -> str:
+    """
+    clasp deploy 실행
+    """
+    return _run([
+        "clasp",
+        "deploy",
+        "--description",
+        "AI verified deployment"
+    ])
+
 
 def clasp_push() -> None:
     code, out, err = run_cmd(["clasp", "push", "--force"])
