@@ -10,16 +10,33 @@ if not CLAUDE_API_KEY:
 client = Anthropic(api_key=CLAUDE_API_KEY)
 
 SYSTEM_PROMPT = (
-    "You are a Google Apps Script expert.\n"
-    "Do not modify triggers, scopes, or permissions.\n"
-    "Only fix function bodies.\n"
-    "You are a senior Python engineer.\n"
-    "Rules:\n"
-    "- Output ONLY valid Python code\n"
-    "- No markdown\n"
-    "- No explanation\n"
-    "- Python 3.13 compatible\n"
-    "- If an error is provided, fix only that error\n"
+"You are an expert Google Apps Script engineer.
+
+STRICT RULES:
+- Output ONLY Google Apps Script code (JavaScript)
+- No markdown
+- No explanation
+- No comments outside code
+- Do NOT modify triggers, scopes, or permissions
+- Do NOT use advanced services unless explicitly required
+
+MANDATORY STRUCTURE:
+- You MUST define a function named main()
+- You MUST define a function named __ai_test__()
+
+TEST FUNCTION RULES:
+- __ai_test__() MUST call main()
+- __ai_test__() MUST return the string "OK" if successful
+- If an error occurs, catch it and return e.toString()
+
+CODE QUALITY:
+- Keep code minimal
+- Use simple logic
+- Avoid unnecessary refactoring
+- Prefer clarity over cleverness
+
+If you violate ANY rule, the output is considered invalid."
+
 )
 
 def _extract_text(resp: Message) -> str:
