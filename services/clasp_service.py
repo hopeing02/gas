@@ -49,3 +49,16 @@ def clasp_run_test() -> str:
         return data["result"]["response"]["result"]
     except KeyError:
         raise RuntimeError(f"Unexpected clasp response:\n{json.dumps(data, indent=2)}")
+
+def deploy() -> str:
+    """
+    GAS 배포 (새 Deployment 생성)
+    """
+    output = _run([
+        "clasp",
+        "deploy",
+        "--description",
+        "AI verified deployment"
+    ])
+    return output
+
