@@ -28,27 +28,24 @@ def clasp_push():
 
 
 def clasp_run_test() -> str:
-    """
-    __ai_test__ 실행 결과 반환
-    """
+    # 1️⃣ JSON 옵션 없이 실행
     output = _run([
         "clasp",
         "run",
-        "__ai_test__",
-        "--json"
+        "__ai_test__"
     ])
 
-    try:
-        data = json.loads(output)
-    except json.JSONDecodeError:
-        raise RuntimeError(f"Invalid JSON from clasp:\n{output}")
+    # 2️⃣ 출력 자체가 없는 경우
+    if not output.strip():
+        raise RuntimeError(
+            "clasp run returned empty output.\n"
+            "Possible causes:\n"
+            "- Execution API not enabled\n"
+            "- Invalid OAuth token\n"
+            "- Headless environment limitation"
+        )
 
-    # GAS Execution API 결과 구조
-    # { "result": { "response": { "result": "OK" } } }
-    try:
-        return data["result"]["response"]["result"]
-    except KeyError:
-        raise RuntimeError(f"Unexpected clasp response:\n{json.dumps(data, indent=2)}")
+    return output.strip()
 
 def deploy() -> str:
     """
